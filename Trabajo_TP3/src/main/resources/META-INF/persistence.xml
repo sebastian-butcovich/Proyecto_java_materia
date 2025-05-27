@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="miUP">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>org.example.trabajo_tp3.Modelo.Usuario</class>
+        <class>org.example.trabajo_tp3.Modelo.PersonalDeSalud</class>
+        <class>org.example.trabajo_tp3.Modelo.Barrio</class>
+        <properties>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.password" value="1234"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/grupo_12"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.pool_size" value="10" />
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>
