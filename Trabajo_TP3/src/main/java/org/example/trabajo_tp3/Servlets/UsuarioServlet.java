@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.trabajo_tp3.Modelo.*;
-import org.example.trabajo_tp3.Services.BarrioServicie;
-import org.example.trabajo_tp3.Services.OrganizacionSocialService;
-import org.example.trabajo_tp3.Services.PersonalDeSaludService;
-import org.example.trabajo_tp3.Services.UserServicie;
+import org.example.trabajo_tp3.Services.*;
 import org.example.trabajo_tp3.Util.ManagerFactory;
 import org.example.trabajo_tp3.Util.ParseJSON;
 import org.hibernate.Transaction;
@@ -30,12 +27,14 @@ public class UsuarioServlet extends HttpServlet {
     private PersonalDeSaludService personalDeSaludService;
     private OrganizacionSocialService organizacionSocialService;
     private ParseJSON parseJSON;
+    private EncuestadorService encuestadorService;
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         userServicie = new UserServicie();
         personalDeSaludService = new PersonalDeSaludService();
         organizacionSocialService = new OrganizacionSocialService();
         parseJSON = new ParseJSON();
+        encuestadorService = new EncuestadorService();
     }
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Usuario> usuarios = userServicie.listar();
@@ -199,7 +198,7 @@ public class UsuarioServlet extends HttpServlet {
             rol.put("actividad_principal",json.get("actividad_principal"));
         }
         if(rolString.equals("ENCUESTADOR")){
-            rol.put("rol","Encuestador");
+            rol.put("rol","ENCUESTADOR");
             rol.put("genero",json.get("genero"));
             rol.put("edad",json.get("edad"));
             rol.put("ocupacion",json.get("ocupacion"));
@@ -239,8 +238,9 @@ public class UsuarioServlet extends HttpServlet {
             Encuestador encuestador = new Encuestador();
             encuestador.setGenero((String)rol.get("genero"));
             encuestador.setOcupacion((String)rol.get("ocupacion"));
-            encuestador.setEdad((Integer)rol.get("edad"));
+            encuestador.setEdad((Integer.parseInt((String)rol.get("edad"))));
             encuestador.setUsuario(u);
+            encuestadorService.agregar(encuestador);
         }
     }
 }

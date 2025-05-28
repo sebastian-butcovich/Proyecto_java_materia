@@ -1,7 +1,10 @@
 package org.example.trabajo_tp3.Services;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import org.example.trabajo_tp3.DAO.GenericDAO;
 import org.example.trabajo_tp3.Modelo.Encuestador;
+import org.example.trabajo_tp3.Util.ManagerFactory;
 
 import java.util.List;
 
@@ -19,7 +22,12 @@ public class EncuestadorService implements GenericDAO<Encuestador> {
 
     @Override
     public boolean agregar(Encuestador encuestador) {
-        return false;
+        EntityManager entityManager = ManagerFactory.getEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+        entityManager.merge(encuestador);
+        entityTransaction.commit();
+        return true;
     }
 
     @Override

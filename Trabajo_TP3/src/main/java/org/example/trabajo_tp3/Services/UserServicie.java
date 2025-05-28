@@ -19,9 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name="usuarios", value="/usuarios")
-public class UserServicie <T> implements GenericDAO <Usuario> {
-
-
+public class UserServicie implements GenericDAO <Usuario> {
 
     public List<Usuario> listar() {
         EntityManager entityManager = ManagerFactory.getEntityManager();

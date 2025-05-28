@@ -1,9 +1,8 @@
 package org.example.trabajo_tp3.Modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Barrio {
@@ -12,6 +11,8 @@ public class Barrio {
     private long id;
     private String nombre;
     private String informacionAdicional;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Zona> zonas;
 
     public long getId() {
         return id;

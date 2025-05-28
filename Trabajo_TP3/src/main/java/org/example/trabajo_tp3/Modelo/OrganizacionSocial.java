@@ -15,6 +15,8 @@ public class OrganizacionSocial {
     private Usuario usuario;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Barrio barrio;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Reporte reporte;
     public Long getId() {
         return id;
     }
