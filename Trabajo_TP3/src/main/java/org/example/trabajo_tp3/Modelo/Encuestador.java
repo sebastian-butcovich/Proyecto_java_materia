@@ -6,16 +6,18 @@ import jakarta.persistence.*;
 public class Encuestador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String genero;
     private String ocupacion;
     private Integer edad;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Usuario usuario;
-    public long getId() {
+    public Long getId() {
         return id;
     }
-
+    public  void setId(Long id) {
+        this.id = id;
+    }
     public Usuario getUsuario() {
         return usuario;
     }

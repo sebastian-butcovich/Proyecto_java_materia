@@ -8,29 +8,29 @@ import java.util.List;
 public class Reporte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String nombre;
     private String imagen;
     private boolean publico;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private PersonalDeSalud personalDeSalud;
+    private PersonalDeSalud creador;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OrganizacionSocial> organizacionSocialList;
+    private List<OrganizacionSocial> solicitantes;
 
-    public List<OrganizacionSocial> getOrganizacionSocialList() {
-        return organizacionSocialList;
+    public List<OrganizacionSocial> getSolicitantes() {
+        return solicitantes;
     }
 
-    public void setOrganizacionSocialList(List<OrganizacionSocial> organizacionSocialList) {
-        this.organizacionSocialList = organizacionSocialList;
+    public void setSolicitantes(List<OrganizacionSocial> solicitantes) {
+        this.solicitantes = solicitantes;
     }
 
-    public PersonalDeSalud getPersonalDeSalud() {
-        return personalDeSalud;
+    public PersonalDeSalud getCreador() {
+        return creador;
     }
 
-    public void setPersonalDeSalud(PersonalDeSalud personalDeSalud) {
-        this.personalDeSalud = personalDeSalud;
+    public void setCreador(PersonalDeSalud creador) {
+        this.creador = creador;
     }
 
     public boolean isPublico() {
@@ -57,11 +57,11 @@ public class Reporte {
         this.nombre = nombre;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

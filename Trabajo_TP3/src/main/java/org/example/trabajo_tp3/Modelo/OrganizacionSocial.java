@@ -6,24 +6,19 @@ import jakarta.persistence.*;
 public class OrganizacionSocial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String nombre;
     private String domicilio;
     private String informacionAdicional;
     private String actividadPrincipal;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Barrio barrio;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Reporte reporte;
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public Barrio getBarrio() {
         return barrio;

@@ -1,0 +1,205 @@
+package org.example.trabajo_tp3.Servlets;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.example.trabajo_tp3.DAO.EntityImpl.*;
+import org.example.trabajo_tp3.Modelo.*;
+import org.example.trabajo_tp3.Util.ManagerFactory;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@WebServlet(name="campania",value = "/ejemploC")
+public class EjemploCampania extends HttpServlet {
+    private BarrioDAO barrioDAO;
+    private JornadaDAO jornadaDAO;
+    private ReporteDAO reporteDAO;
+    private EncuestadorDAO encuestadorDAO;
+    private OrganizacionSocialDAO organizacionSocialDAO;
+    private UsuarioDAO usuarioDAO;
+    private CoordenadaDAO coordenadaDAO;
+    private ZonaDAO zonaDAO;
+    private PersonalMedicoDAO personalMedicoDAO;
+    private CampaniaDAO campaniaDAO;
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        barrioDAO = new BarrioDAO();
+        jornadaDAO = new JornadaDAO();
+        reporteDAO = new ReporteDAO();
+        encuestadorDAO = new EncuestadorDAO();
+        organizacionSocialDAO = new OrganizacionSocialDAO();
+        usuarioDAO = new UsuarioDAO();
+        coordenadaDAO = new CoordenadaDAO();
+        zonaDAO = new ZonaDAO();
+        personalMedicoDAO = new PersonalMedicoDAO();
+        campaniaDAO = new CampaniaDAO();
+    }
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        EntityManager em = ManagerFactory.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        List<Encuestador> listEncuestadores = new ArrayList<>();
+        Encuestador encuestador = new Encuestador();
+        Usuario usuario = new Usuario();
+        usuario.setNombre("usuario encuestador");
+        usuario.setApellido("usuario encuestador2");
+        usuario.setEmail("email encuestador");
+        usuario.setRol(Usuario.Rol.ENCUESTADOR);
+        usuario.setDNI("39348392");
+        usuario.setTelefono("123456789");
+        usuarioDAO.agregar(usuario);
+        tx.commit();
+        tx.begin();
+        encuestador.setUsuario(usuario);
+        encuestador.setGenero("femenino");
+        encuestador.setOcupacion("ocupacion");
+        encuestador.setEdad(19);
+        encuestador.setUsuario(usuario);
+        encuestadorDAO.agregar(encuestador);
+        tx.commit();
+        tx.begin();
+        listEncuestadores.add(encuestador);
+        Campania campania = new Campania();
+        Barrio barrio = new Barrio();
+        List<Zona> zonas = new ArrayList<>();
+        //Zona 1 con sus coordenadas
+        Zona z1 = new Zona();
+        Coordenada c1z1 = new Coordenada();
+        c1z1.setCoorX("30");
+        c1z1.setCoorY("25");
+        coordenadaDAO.agregar(c1z1);
+        tx.commit();
+        tx.begin();
+        Coordenada c2z1 = new Coordenada();
+        c2z1.setCoorX("40");
+        c2z1.setCoorY("20");
+        coordenadaDAO.agregar(c2z1);
+        tx.commit();
+        tx.begin();
+        List<Coordenada> coordenadasZ1 = new ArrayList<>();
+        coordenadasZ1.add(c1z1);
+        coordenadasZ1.add(c2z1);
+        z1.setCoordenadas(coordenadasZ1);
+        z1.setNombre("La movida");
+        z1.setInformacion("Es una zona buena");
+        zonaDAO.agregar(z1);
+        tx.commit();
+        tx.begin();
+        zonas.add(z1);
+        //Barrio 1
+        barrio.setZonas(zonas);
+        barrio.setNombre("Barrio");
+        barrio.setInformacionAdicional("Información adicional");
+        barrioDAO.agregar(barrio);
+        tx.commit();
+        tx.begin();
+        //Jornada
+        Jornada jornada = new Jornada();
+        jornada.setFecha(new Date());
+        jornadaDAO.agregar(jornada);
+        tx.commit();
+        tx.begin();
+        List<Jornada> jornadas = new ArrayList<>();
+        jornadas.add(jornada);
+        //Médico
+        List<Reporte> reportes = new ArrayList<>();
+        Usuario usuario4 = new Usuario();
+        usuario4.setRol(Usuario.Rol.MEDICO);
+        usuario4.setDNI("23940123");
+        usuario4.setTelefono("2245491232");
+        usuario4.setNombre("Marcelo");
+        usuario4.setApellido("Roba facil");
+        usuarioDAO.agregar(usuario4);
+        tx.commit();
+        tx.begin();
+        PersonalDeSalud psd = new PersonalDeSalud();
+        psd.setMatricula((long)38201283);
+        psd.setUsuario(usuario);
+        personalMedicoDAO.agregar(psd);
+        tx.commit();
+        tx.begin();
+        //Referente
+        Usuario usuario3 = new Usuario();
+        usuario3.setNombre("Roberto");
+        usuario3.setApellido("Sanchez");
+        usuario3.setDNI("43673893");
+        usuario3.setEmail("sanchez@gmail.com");
+        usuario3.setTelefono("+54673893");
+        usuario3.setRol(Usuario.Rol.REFERENTE);
+        usuarioDAO.agregar(usuario3);
+        tx.commit();
+        tx.begin();
+        Coordenada coordenada = new Coordenada();
+        coordenada.setCoorX("29");
+        coordenada.setCoorY("21");
+        coordenadaDAO.agregar(coordenada);
+        tx.commit();
+        tx.begin();
+        Coordenada coordenada2 = new Coordenada();
+        coordenada2.setCoorX("32");
+        coordenada2.setCoorY("27");
+        coordenadaDAO.agregar(coordenada2);
+        tx.commit();
+        tx.begin();
+        Coordenada coordenada3 = new Coordenada();
+        coordenada3.setCoorX("53");
+        coordenada3.setCoorY("21");
+        coordenadaDAO.agregar(coordenada3);
+        tx.commit();
+        tx.begin();
+        //Zona
+        Zona zona = new Zona();
+        zona.setNombre("La matanza");
+        zona.setInformacion("Lugar peligroso");
+        List<Coordenada> coordenadas = new ArrayList<Coordenada>();
+        coordenadas.add(coordenada2);
+        coordenadas.add(coordenada3);
+        zona.setCoordenadas(coordenadas);
+        zonaDAO.agregar(zona);
+        tx.commit();
+        tx.begin();
+        //Organización social
+        OrganizacionSocial organizacionSocial = new OrganizacionSocial();
+        organizacionSocial.setNombre("Comida para todos");
+        organizacionSocial.setDomicilio("Calle falsa 123");
+        organizacionSocial.setActividadPrincipal("Llevar comida al barrio");
+        organizacionSocial.setInformacionAdicional("Fundada 1959");
+        organizacionSocial.setUsuario(usuario3);
+        organizacionSocial.setBarrio(barrio);
+        organizacionSocialDAO.agregar(organizacionSocial);
+        tx.commit();
+        tx.begin();
+        // Reporte
+        Reporte reporte = new Reporte();
+        reporte.setNombre("Reporte espiritual");
+        reporte.setImagen("data:image://base64");
+        reporte.setPublico(true);
+        reporte.setCreador(psd);
+        List<OrganizacionSocial> list = new ArrayList<OrganizacionSocial>();
+        list.add(organizacionSocial);
+        reporte.setSolicitantes(list);
+        reporteDAO.agregar(reporte);
+        tx.commit();
+        tx.begin();
+        //Campañia
+        reportes.add(reporte);
+        campania.setJornada(jornadas);
+        campania.setBarrio(barrio);
+        campania.setNombre("Campania");
+        campania.setFechaFin(new Date());
+        campania.setFechaInicio(new Date());
+        campania.setReportes(reportes);
+        campania.setEncuestas(null);
+        campaniaDAO.agregar(campania);
+        tx.commit();
+        em.close();
+    }
+}

@@ -9,15 +9,15 @@ import java.util.List;
 public class Jornada {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private Date fecha;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Zona> zonaList;
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

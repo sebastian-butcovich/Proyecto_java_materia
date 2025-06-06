@@ -3,14 +3,14 @@ package org.example.trabajo_tp3.Modelo;
 import jakarta.persistence.*;
 import org.example.trabajo_tp3.Modelo.Encuestas.Encuesta;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 public class Campania {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String nombre;
     private Date fechaInicio;
     private Date fechaFin;
@@ -23,11 +23,11 @@ public class Campania {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Reporte> reportes;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
